@@ -41,7 +41,6 @@ const Feedback = async ({ params }: RouteParams) => {
             </p>
           </div>
 
-          {/* Date */}
           <div className="flex flex-row gap-2">
             <Image src="/calendar.svg" width={22} height={22} alt="calendar" />
             <p>

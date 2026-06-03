@@ -1,6 +1,6 @@
-Interview Prep AI
+Prepview
 
-**Interview Prep AI** is a smart, interactive platform that helps users prepare for interviews by simulating real interview scenarios with an AI assistant. Instantly assess your knowledge, receive feedback, and track your progress, all in one place.
+**Prepview** is a smart, interactive platform that helps users prepare for interviews by simulating real interview scenarios with an AI assistant. Instantly assess your knowledge, receive feedback, and track your progress, all in one place.
 
 ## Features
 - Take mock interviews across various topics
@@ -14,5 +14,3 @@ Interview Prep AI
 - VAPI - Voice AI Agents for Developers
 - Tailwind CSS  
 - Firebase for storage
-
-Have fun!!

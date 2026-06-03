@@ -8,7 +8,7 @@ const Interview = async () => {
     <>
     <h3>Interview Question</h3>
 
-    <AgentCard userName={user?.name} userId={user?.id}  type="generate"/>
+    <AgentCard userName={user?.name} userId={user?.id} type="generate"/>
     </>
   )
 }

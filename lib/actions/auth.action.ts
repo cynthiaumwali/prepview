@@ -84,7 +84,7 @@ export async function setSessionCookie(idToken: string){
 
 export async function getCurrentUser(): Promise<User | null>{
     const cookieStore = await cookies()
-    const session = await cookieStore.get("session")
+    const session = cookieStore.get("session")
     if(!session){
         return null
     }
