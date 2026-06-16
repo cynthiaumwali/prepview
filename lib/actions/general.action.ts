@@ -6,6 +6,20 @@ import { google } from "@ai-sdk/google";
 import { db } from "@/firebase/admin";
 import { feedbackSchema } from "@/constants";
 
+export async function saveInterview(interview: Omit<Interview, "id" | "createdAt">) {
+  try {
+    const interviewRef = db.collection("interviews").doc();
+    await interviewRef.set({
+      ...interview,
+      createdAt: new Date().toISOString(),
+    });
+    return { success: true, interviewId: interviewRef.id };
+  } catch (error) {
+    console.error("Error saving interview:", error);
+    throw new Error("Failed to save interview");
+  }
+}
+
 export async function createFeedback(params: CreateFeedbackParams) {
   const { interviewId, userId, transcript, feedbackId } = params;
 

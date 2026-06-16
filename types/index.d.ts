@@ -15,7 +15,7 @@ interface Feedback {
 
 interface Interview {
   id: string;
-  coverImage: string;
+  coverImage: string | "/covers/default.jpg";
   role: string;
   level: string;
   questions: string[];
@@ -61,6 +61,16 @@ interface AgentProps {
 interface RouteParams {
   params: Promise<Record<string, string>>;
   searchParams: Promise<Record<string, string>>;
+}
+
+interface SaveInterviewParams {
+  coverImage?: string | "/covers/default.jpg";
+  role: string;
+  level: string;
+  type: string;
+  techstack: string[];
+  questions: string[];
+  userId: string;
 }
 
 interface GetFeedbackByInterviewIdParams {
