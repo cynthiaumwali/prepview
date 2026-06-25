@@ -5,12 +5,33 @@ import { google } from "@ai-sdk/google";
 
 import { db } from "@/firebase/admin";
 import { feedbackSchema } from "@/constants";
+import { getRandomInterviewCover } from "@/lib/utils";
 
-export async function saveInterview(interview: Omit<Interview, "id" | "createdAt">) {
+function extractRoleFromTranscript(
+  transcript: { role: string; content: string }[] = []
+) {
+  const userMessages = transcript
+    .filter((message) => message.role === "user")
+    .map((message) => message.content)
+    .join(" ");
+
+  const roleMatch = userMessages.match(
+    /i(?:'m| am) (?:a |an )?([a-zA-Z\s]+?)(?:\s+developer|\s+engineer|\s+designer)?(?:\.|,|$)/i
+  );
+
+  return roleMatch ? roleMatch[1].trim() : "software engineer"; // fallback
+}
+
+export async function saveInterview(
+  interview: Omit<Interview, "id" | "createdAt" | "role" | "coverImage">
+) {
   try {
     const interviewRef = db.collection("interviews").doc();
     await interviewRef.set({
       ...interview,
+      role: extractRoleFromTranscript(interview.transcript),
+      transcript: interview.transcript,
+      coverImage: getRandomInterviewCover(),
       createdAt: new Date().toISOString(),
     });
     return { success: true, interviewId: interviewRef.id };

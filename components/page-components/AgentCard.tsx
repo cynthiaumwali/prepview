@@ -88,19 +88,7 @@ const AgentCard = ({
     }
 
 const handleGenerateFeedback = async (messages: SavedMessage[]) => {
-  // Extract role from transcript by finding where user mentioned it
-  const userMessages = messages
-    .filter((m) => m.role === "user")
-    .map((m) => m.content)
-    .join(" ");
-
-  // Simple extraction — look for common patterns
-  const roleMatch = userMessages.match(
-    /i(?:'m| am) (?:a |an )?([a-zA-Z\s]+?)(?:\s+developer|\s+engineer|\s+designer)?(?:\.|,|$)/i
-  );
-  const role = roleMatch ? roleMatch[1].trim() : "software engineer"; // fallback
   const interview = {
-    role,
     userId: userId!,
     type: "generate",
     techstack: [],
@@ -108,9 +96,10 @@ const handleGenerateFeedback = async (messages: SavedMessage[]) => {
     questions: messages
       .filter((m) => m.role === "assistant")
       .map((m) => m.content),
+    transcript: messages,
     finalized: true,
   };
-  // await saveInterview(interview);
+  await saveInterview(interview);
 
   const { success, feedbackId: id } = await createFeedback({
     interviewId: interviewId!,

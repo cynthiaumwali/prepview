@@ -20,6 +20,7 @@ interface Interview {
   level: string;
   questions: string[];
   techstack: string[];
+  transcript?: { role: string; content: string }[];
   createdAt: string;
   userId: string;
   type: string;
