@@ -2,6 +2,8 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { logout } from '@/lib/actions/auth.action';
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -61,6 +63,14 @@ function ListItem({ title, children, href, ...props }: React.ComponentPropsWitho
 }
 
 export default function Navbar() {
+    const router = useRouter();
+
+    const handleSignOut = async () => {
+        await logout();
+        router.replace('/login');
+        router.refresh();
+    };
+
     return (
         <div className="w-full flex justify-between items-center px-6 lg:px-12 border-b py-4">
             <Link href="/" className="text-lg font-bold">
@@ -175,7 +185,8 @@ export default function Navbar() {
 
                 </NavigationMenuList>
             </NavigationMenu>
-            <Button className="flex items-center gap-2 rounded-full px-4">
+            <Button onClick={handleSignOut} className="flex items-center gap-2 rounded-full px-4">
+                <LogOutIcon className="size-4" />
                 Sign Out
             </Button>
         </div>

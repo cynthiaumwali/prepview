@@ -114,5 +114,17 @@ export async function isAuthenticated(){
 
 export async function logout(){
     const cookieStore = await cookies()
+    const session = cookieStore.get("session")
+
+    if(session){
+        try {
+            // Revoke the session server-side so the cookie can't be reused
+            const claims = await auth.verifySessionCookie(session.value, true)
+            await auth.revokeRefreshTokens(claims.sub)
+        } catch (error) {
+            console.error("Failed to revoke session", error)
+        }
+    }
+
     cookieStore.delete("session")
 }
