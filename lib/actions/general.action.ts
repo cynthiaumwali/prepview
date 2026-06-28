@@ -7,6 +7,20 @@ import { db } from "@/firebase/admin";
 import { feedbackSchema } from "@/constants";
 import { getRandomInterviewCover } from "@/lib/utils";
 
+function extractLevelFromTranscript(
+  transcript: { role: string; content: string }[] = []
+) {
+  const userMessages = transcript
+    .filter((message) => message.role === "user")
+    .map((message) => message.content)
+    .join(" ");
+
+    const levelMatch = userMessages.match(
+    /i(?:'m| am) (?:a |an )?(?:[a-zA-Z\s]+?) (junior|mid-level|senior|lead)(?:\s+developer|\s+engineer|\s+designer)?(?:\.|,|$)/i
+  );
+  return levelMatch ? levelMatch[2].trim() : "mid-level"; // fallback
+}
+
 function extractRoleFromTranscript(
   transcript: { role: string; content: string }[] = []
 ) {
@@ -28,11 +42,15 @@ export async function saveInterview(
   try {
     const interviewRef = db.collection("interviews").doc();
     await interviewRef.set({
-      ...interview,
+      // ...interview,
+      finalized: interview.finalized,
+      level: extractLevelFromTranscript(interview.transcript),
+      questions: interview.questions,
       role: extractRoleFromTranscript(interview.transcript),
       transcript: interview.transcript,
       coverImage: getRandomInterviewCover(),
       createdAt: new Date().toISOString(),
+      type: interview.type,
     });
     return { success: true, interviewId: interviewRef.id };
   } catch (error) {
