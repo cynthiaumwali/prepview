@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import {Mona_Sans} from "next/font/google";
+import {Raleway} from "next/font/google";
 import "./globals.css";
 
-const monaSans = Mona_Sans({
-  variable: "--font-mono-sans",
+const raleway = Raleway({
+  variable: "--font-raleway",
   subsets: ["latin"],
 });
 
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="light">
       <body
-        className={`${monaSans.variable} antialiased`}
+        className={`${raleway.variable} font-raleway antialiased`}
       >
         {children}
       </body>

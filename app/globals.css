@@ -27,7 +27,8 @@
   --color-dark-200: #1e1f25;   /* slate gray */
   --color-dark-300: #2a2c3a;
 
-  --font-mona-sans: "Mona Sans", sans-serif;
+  --font-raleway: var(--font-raleway), sans-serif;
+  --font-sans: var(--font-raleway), sans-serif;
 
   --bg-pattern: url("/public/pattern.png");
 }
