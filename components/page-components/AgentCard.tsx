@@ -145,6 +145,7 @@ const handleGenerateFeedback = async (messages: SavedMessage[]) => {
 
       await vapi.start(interviewer, {
         variableValues: {
+          username: userName,
           questions: formattedQuestions,
         },
       });
